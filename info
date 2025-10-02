@@ -1,0 +1,119 @@
+🎯 Objective
+
+The goal of this project is to develop a deep learning model for automatic lung segmentation from chest X-ray images, which is crucial for detecting pulmonary tuberculosis (PTB) and other lung-related diseases. Segmentation helps isolate lung regions, making further diagnosis (like disease classification) more accurate.
+
+📂 Dataset
+
+Source: Chest X-ray dataset with paired images and masks.
+
+Metadata: Contains demographic details such as age, gender, and PTB status.
+
+Exploratory Data Analysis (EDA):
+
+PTB distribution: Shows percentage of positive vs. negative cases.
+
+Gender analysis: Balanced representation after cleaning inconsistent labels.
+
+Age analysis: Distribution across patients with/without PTB.
+
+Visualizations: Pie charts, histograms, bar plots, and heatmaps.
+
+🧪 Preprocessing & Data Handling
+
+Image & Mask Preprocessing:
+
+Resized to 256 × 256 pixels.
+
+Grayscale normalization (scaled between 0–1).
+
+Masks binarized (0 for background, 1 for lung region).
+
+Data Generator (Custom Class):
+
+Built using keras.utils.Sequence for efficient batch loading.
+
+Supports shuffling, augmentation-ready design.
+
+Train-Validation Split: 70% training, 30% validation.
+
+🏗 Model Architecture – U-Net
+
+Input Shape: (256, 256, 1) (grayscale).
+
+Encoder (Contracting Path):
+
+3 convolutional blocks with filters (64 → 128 → 256).
+
+Each block: Conv2D → BatchNorm → Conv2D → BatchNorm → MaxPooling.
+
+Bottleneck:
+
+2 convolutional layers with 512 filters.
+
+Decoder (Expansive Path):
+
+3 upsampling blocks (256 → 128 → 64).
+
+Skip connections with encoder layers (to preserve spatial info).
+
+Output Layer:
+
+1x1 Conv2D with sigmoid activation for binary segmentation.
+
+⚙️ Model Compilation
+
+Optimizer: Adam
+
+Loss Function: Binary Cross-Entropy
+
+Evaluation Metrics:
+
+Accuracy
+
+Dice Coefficient (measures overlap)
+
+Jaccard Index (IoU) (intersection over union)
+
+📈 Training
+
+Trained with custom generators.
+
+Batch size: 8
+
+Used validation split for monitoring.
+
+Callback: ModelCheckpoint (saves best model).
+
+📊 Results & Visualizations
+
+Training curves: Accuracy and loss over epochs.
+
+Evaluation Metrics: Dice coefficient and Jaccard index tracked.
+
+Prediction samples: Visual comparison of
+
+Input chest X-ray
+
+Ground truth mask
+
+Predicted mask (overlay visualization).
+
+✅ Key Outcomes
+
+U-Net successfully segments lungs from chest X-ray images.
+
+High overlap metrics (Dice & IoU) show reliable segmentation performance.
+
+The segmentation framework can serve as a preprocessing step for TB diagnosis models or other radiology AI applications.
+
+🛠 Tools & Frameworks
+
+Deep Learning: TensorFlow, Keras
+
+Data Handling: NumPy, Pandas, OpenCV, Scikit-learn
+
+Visualization: Matplotlib, Seaborn
+
+Image Processing: scikit-image, OpenCV
+
+Environment: GPU-enabled TensorFlow
